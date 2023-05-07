@@ -7,7 +7,7 @@ let patientSchema = new mongoose.Schema({
     age: {type: Number, required: true},
     sex: {type: String, required: true},
     mobile: {type: Number, required: true},
-    email: {type: Number, required: true}
+    email: {type: String, required: true}
 
 },
 {

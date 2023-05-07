@@ -14,4 +14,4 @@ app.use(cors());
 //Routes
 app.use("/api/patient", patientRoute);
 
-app.listen(8085, ()=>console.log("Serve started"));
+app.listen(5000, ()=>console.log("Serve started"));
