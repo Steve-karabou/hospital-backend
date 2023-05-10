@@ -42,7 +42,7 @@ export default class PatientController{
     static getPaginatePatients(req: Request, resp: Response){
       
      let p:number = parseInt(req.query.page?''+req.query.page: '1');
-     let size:number = parseInt(req.query.size?''+req.query.size: '5');
+     let size:number = parseInt(req.query.size?''+req.query.size: '7');
       Patient.paginate({}, {page:p, limit: size}).then((data)=> resp.status(200).json(data))
      .catch((err)=>resp.status(500).json({err: ""+err}));
 
@@ -50,10 +50,20 @@ export default class PatientController{
 
     static searchPatients(req: Request, resp: Response){
         let p:number = parseInt(req.query.page?''+req.query.page: '1');
-        let size:number = parseInt(req.query.size?''+req.query.size: '5');
-        let kw:string = req.query.kw? ""+req.query.kw: "";
-         Patient.paginate({title: {$regex:".*(?i)"+kw+".*"}}, {page:p, limit: size}).then((data)=> resp.status(200).json(data))
+        let size:number = parseInt(req.query.size?''+req.query.size: '7');
+        let name:string = req.query.name? ""+req.query.name: "";
+         Patient.paginate({lastName: {$regex:".*(?i)"+name+".*"}}, {page:p, limit: size}).then((data)=> resp.status(200).json(data))
          .catch((err)=>resp.status(500).json({err: ""+err}));  
+    }
+
+    static updatePatient(req: Request, resp: Response){
+        Patient.findByIdAndUpdate(req.params.id, req.body).then(()=> resp.status(200).json("Patient updated succeslully"))
+        .catch((err)=>resp.status(400).json(err)); 
+    }
+
+    static deletePatient(req: Request, resp: Response){
+      Patient.findByIdAndDelete(req.params.id, req.body).then(()=> resp.status(200).json("Delete deleted succeslully"))
+        .catch((err)=>resp.status(400).json(err)); 
     }
 
     
