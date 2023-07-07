@@ -11,7 +11,7 @@ router.get("/", patientController.getAllPatients);
 
 router.put("/:id", patientController.updatePatient);
 
-router.delete("/:id", patientController.updatePatient);
+router.delete("/:id", patientController.deletePatient);
 
 router.get("/paginate/", patientController.getPaginatePatients);
 

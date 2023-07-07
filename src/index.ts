@@ -1,17 +1,20 @@
 import express from "express";
 import mongoose from "mongoose";
 import patientRoute from "./routes/patient";
+import userRoute from "./routes/user";
 import cors from "cors";
+import config from "./config";
 const app = express();
 
-
-mongoose.connect('mongodb://127.0.0.1:27017/CLINIC').then(() =>console.log("Mongo Data base connectd successfuly"))
+mongoose.connect(`${config.data_base}`).then(() =>console.log("Mongo Data base connectd successfuly"))
 .catch((err)=> console.error(err));
 
 app.use(express.json());
 app.use(cors());
 
 //Routes
-app.use("/api/patient", patientRoute);
+app.use("/"+config.prefix+"/user", userRoute);
 
-app.listen(5000, ()=>console.log("Serve started"));
+app.use("/"+config.prefix+"/patient", patientRoute);
+
+app.listen(config.port, ()=>console.log(`Serve started on ${config.port}`));
