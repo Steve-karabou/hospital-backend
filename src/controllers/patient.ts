@@ -41,29 +41,43 @@ export default class PatientController{
 
     static getPaginatePatients(req: Request, resp: Response){
       
-     let p:number = parseInt(req.query.page?''+req.query.page: '1');
-     let size:number = parseInt(req.query.size?''+req.query.size: '7');
+     let p:number = parseInt(req.query.page ? ''+req.query.page : '1');
+     let size:number = parseInt(req.query.size ? ''+req.query.size : '7');
       Patient.paginate({}, {page:p, limit: size}).then((data)=> resp.status(200).json(data))
      .catch((err)=>resp.status(500).json({err: ""+err}));
 
     }
 
     static searchPatients(req: Request, resp: Response){
-        let p:number = parseInt(req.query.page?''+req.query.page: '1');
-        let size:number = parseInt(req.query.size?''+req.query.size: '7');
-        let name:string = req.query.name? ""+req.query.name: "";
+        let p:number = parseInt(req.query.page ? ''+req.query.page : '1');
+        let size:number = parseInt(req.query.size ? ''+req.query.size : '7');
+        let name:string = req.query.name ? ""+req.query.name : "";
          Patient.paginate({lastName: {$regex:".*(?i)"+name+".*"}}, {page:p, limit: size}).then((data)=> resp.status(200).json(data))
          .catch((err)=>resp.status(500).json({err: ""+err}));  
     }
 
     static updatePatient(req: Request, resp: Response){
-        Patient.findByIdAndUpdate(req.params.id, req.body).then(()=> resp.status(200).json("Patient updated succeslully"))
-        .catch((err)=>resp.status(400).json(err)); 
+        const schema = Joi.object({
+            lastName: Joi.string().required().label("Nom de famille"),
+            firstName: Joi.string().required().label("Prénom"),
+            age: Joi.number().integer().required().label("Age"),
+            sex: Joi.string().required().label("Sexe"),
+            mobile: Joi.number().integer().required().label("Numero de Téléphone"),
+            email: Joi.string().required().label("Email"),
+         });
+
+        const {value, error} = schema.validate(req.body);
+          if(error){
+             return resp.status(400).json({error: true, message: error?.details[0].message})
+           }
+
+        Patient.findByIdAndUpdate(req.params.id, value).then(()=> resp.status(200).json("Patient updated succeslully"))
+        .catch((err)=>resp.status(500).json(err)); 
     }
 
     static deletePatient(req: Request, resp: Response){
-      Patient.findByIdAndDelete(req.params.id, req.body).then(()=> resp.status(200).json("Delete deleted succeslully"))
-        .catch((err)=>resp.status(400).json(err)); 
+      Patient.findByIdAndDelete(req.params.id).then(()=> resp.status(200).json("Delete deleted succeslully"))
+        .catch((err)=>resp.status(500).json(err)); 
     }
 
     

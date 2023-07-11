@@ -9,9 +9,9 @@ router.get("/:id([0-9a-z]{24})", patientController.getOnePatient);
 
 router.get("/", patientController.getAllPatients);
 
-router.put("/:id", patientController.updatePatient);
+router.put("/:id([0-9a-z]{24})", patientController.updatePatient);
 
-router.delete("/:id", patientController.deletePatient);
+router.delete("/:id([0-9a-z]{24})", patientController.deletePatient);
 
 router.get("/paginate/", patientController.getPaginatePatients);
 

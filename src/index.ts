@@ -17,4 +17,4 @@ app.use("/"+config.prefix+"/user", userRoute);
 
 app.use("/"+config.prefix+"/patient", patientRoute);
 
-app.listen(config.port, ()=>console.log(`Serve started on ${config.port}`));
+app.listen(config.port, ()=>console.log(`Server is listening on port ${config.port}`));
