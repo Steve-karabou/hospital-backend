@@ -1,18 +1,17 @@
 import mongoose from "mongoose";
-import mongoosePaginate from "mongoose-paginate";
+import mongoosePagination from "mongoose-paginate"
 
-let userSchema = new mongoose.Schema({
-    userName: {type:String, required: true},
-    email: {type: String, required: true},
-    phoneNumber: {type: String, require: true},
-    password: {type: String, require: true},
-    role: {type: String, require: true}
+const userSchema = new mongoose.Schema({
+  username: {type: String, required: true},
+  email: {type: String, required: true},
+  password: {type: String, required: true}
 },
 {
-    timestamps: true
- });
+ timestamps: true
+})
 
- userSchema.plugin(mongoosePaginate);
+userSchema.plugin(mongoosePagination)
 
- const User = mongoose.model("User", userSchema);
- export default User;
+const User = mongoose.model("User", userSchema);
+
+export default User;

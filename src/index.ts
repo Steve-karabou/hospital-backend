@@ -6,7 +6,7 @@ import cors from "cors";
 import config from "./config";
 const app = express();
 
-mongoose.connect(`${config.data_base}`).then(() =>console.log("Mongo Data base connectd successfuly"))
+mongoose.connect(`${config.data_base}`).then(() =>console.log("Mongoose Data base connected successfuly"))
 .catch((err)=> console.error(err));
 
 app.use(express.json());
