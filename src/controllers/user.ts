@@ -10,8 +10,6 @@ export default class UserController {
 
       
     static async createUser(req: Request, res: Response) {
-
-        let result;
                 
         const schema = Joi.object({
             username: Joi.string().required().label("Username"),
@@ -27,15 +25,15 @@ export default class UserController {
             throw new ClientError(`${error?.details[0].message}`);
           }
 
-          result = await UserService.newUser(value, Roles.USER);
+          const result = await UserService.newUser(value, Roles.USER);
+          res.status(result.status).json({message: result.message});
 
         }catch(err){
-            result = {message: `${err}`, status: 400};
-            console.error("err: ", err);          
+           console.error("err: ", err); 
+           const  result = {message: `${err}`, status: 400};
+           res.status(result.status).json({message: result.message});
+                 
         }
-        
-          
-        res.status(result.status).json({message: result.message});
         
     }
     
