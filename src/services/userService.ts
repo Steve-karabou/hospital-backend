@@ -1,4 +1,5 @@
 import ClientError from "../exceptions/clientError";
+import CustomError from "../exceptions/customError";
 import Result from "../interfaces/result";
 import IUser from "../interfaces/user";
 import User from "../models/user";
@@ -37,5 +38,16 @@ export default class UserService {
     }
 
      return result;
+    }
+
+    static async getAllUser(): Promise<string | IUser[]> {
+      
+      try{
+       return await User.find({},{"password" : 0, "__v": 0});
+
+      }catch(err){
+        console.error(err);
+        return "Error: " + err;
+      }
     }
 }

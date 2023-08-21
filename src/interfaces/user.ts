@@ -1,11 +1,11 @@
 export default interface IUser {
-    _id?: String,
-    username: String,
-    email: String,
-    password: String,
-    role?: String,
-    createdAt?: String, 
-    updatedAt?: String,
-    __v?: String
+    _id?: any,
+    username: string,
+    email: string,
+    password?: string,
+    role: string,
+    createdAt: string, 
+    updatedAt: string,
+    __v: number
 
 }
